@@ -34,7 +34,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/your-business": {
+      "/clubAdmin": {
         // "target": "http://39.108.114.91:8080/",
         "target": "http://localhost:8080/"
       }

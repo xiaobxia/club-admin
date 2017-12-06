@@ -5,7 +5,6 @@ import Register from 'Bundle-loader?lazy!localRoutes/Register'
 import RegisterResult from 'Bundle-loader?lazy!localRoutes/RegisterResult'
 import UserActive from 'Bundle-loader?lazy!localRoutes/Active'
 import Dashboard from 'Bundle-loader?lazy!localRoutes/Dashboard'
-import Test from 'Bundle-loader?lazy!localRoutes/Test'
 
 //router4就得以这种方式懒加载
 //其实model不需要按需加载，因为本来就不应该太大，应该由组件自己维护状态
@@ -53,10 +52,5 @@ export const baseRoutes = [
     name: 'Dashboard',
     path: '/dashboard',
     component: getComponent(Dashboard)
-  },
-  {
-    name: 'Test',
-    path: '/test',
-    component: getComponent(Test)
   }
 ];

@@ -3,9 +3,9 @@
  */
 import React, {PureComponent} from 'react'
 import {Icon, Button, Form, Input} from 'antd';
-import {injectIntl} from 'react-intl';
-import {consoleRender} from 'localUtil/consoleLog'
+
 const FormItem = Form.Item;
+
 class LoginForm extends PureComponent {
   loginHandler = () => {
     const {
@@ -17,7 +17,6 @@ class LoginForm extends PureComponent {
     onLoginHandler(getFieldsValue());
   };
   render() {
-    consoleRender('LoginForm render');
     // 渲染多次的原因是，自动填充了两次
     const {
       form: {
@@ -25,7 +24,6 @@ class LoginForm extends PureComponent {
       },
       children
     } = this.props;
-    const locale = this.props.intl.formatMessage;
     return (
         <Form className="login-form">
           <FormItem>
@@ -46,7 +44,7 @@ class LoginForm extends PureComponent {
           <FormItem style={{marginTop: '20px'}}>
             <Button style={{width: '100%'}} type="primary" htmlType="submit" className="login-form-button"
                     onClick={this.loginHandler}>
-              {locale({id: 'App.login'})}
+              登录
             </Button>
           </FormItem>
         </Form>
@@ -54,4 +52,4 @@ class LoginForm extends PureComponent {
   }
 }
 
-export default Form.create()(injectIntl(LoginForm));
+export default Form.create()(LoginForm);

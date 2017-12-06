@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-const basePath = '/your-business/';
+const basePath = '/clubAdmin/';
 function makeUrl(url) {
   if (url.startsWith('/') || url.startsWith('http://') || url.startsWith('https://')) {
     return url;
@@ -16,7 +16,7 @@ function addTimestamp(url) {
   } else {
     hook = index + 1 === url.length ? '' : '&';
   }
-  return `${url}${hook}timestamp=${new Date().getTime()}`;
+  return `${url}${hook}_=${new Date().getTime()}`;
 }
 const Http = {
   get (url, options) {

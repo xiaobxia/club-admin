@@ -6,8 +6,6 @@ import {Card, Alert} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {bindActionCreators} from 'redux';
-import {injectIntl} from 'react-intl';
-import {consoleRender} from 'localUtil/consoleLog'
 import LoginForm from './form'
 import {appActions} from 'localStore/actions'
 
@@ -39,12 +37,10 @@ class Login extends PureComponent {
   };
 
   render() {
-    consoleRender('Login render');
     // 渲染多次的原因是，自动填充了两次
-    const locale = this.props.intl.formatMessage;
     return (
       <div className="login-wrap">
-        <div className="logo">{locale({id: 'App.name'})}</div>
+        <div className="logo">登录</div>
         {this.state.showError && (<Alert message={this.state.errorMsg} type="error" closable onClose={this.onClose}/>)}
         <Card noHovering={true}>
           <LoginForm onLoginHandler={this.loginHandler}>
@@ -67,4 +63,4 @@ const mapDispatchToProps = dispatch => ({
   appActions: bindActionCreators(appActions, dispatch)
 });
 
-export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(Login)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
