@@ -3,6 +3,9 @@
  */
 import { combineReducers } from 'redux'
 import {appReducers} from './module/app';
+import {broadcastReducers} from './module/broadcast';
+
 export default combineReducers({
-  app: appReducers
+  app: appReducers,
+  broadcast: broadcastReducers
 })

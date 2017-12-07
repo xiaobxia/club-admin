@@ -3,7 +3,6 @@
  */
 import React, {PureComponent} from 'react'
 import {withRouter} from 'react-router-dom'
-import {injectIntl} from 'react-intl'
 import {Modal, Button, Form, Input, Icon} from 'antd';
 import {consoleRender} from 'localUtil/consoleLog'
 const FormItem = Form.Item;
@@ -67,12 +66,11 @@ class ModelLogin extends PureComponent {
         getFieldDecorator
       }
     } = this.props;
-    let locale = this.props.intl.formatMessage;
     const {confirmLoading} = this.state;
     const {visible} = this.props;
     return (
       <div>
-        <Modal title={locale({id: 'App.login'})}
+        <Modal title="登录"
                visible={visible}
                onOk={this.handleOk}
                confirmLoading={confirmLoading}
@@ -100,4 +98,4 @@ class ModelLogin extends PureComponent {
   }
 }
 
-export default Form.create()(injectIntl(withRouter(ModelLogin)));
+export default Form.create()(withRouter(ModelLogin));

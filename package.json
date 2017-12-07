@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "antd": "^2.13.2",
+    "antd": "^3.0.0",
     "assign-deep": "^0.4.6",
     "axios": "^0.16.2",
     "babel-polyfill": "^6.26.0",

@@ -1,31 +1,40 @@
 /**
  * Created by xiaobxia on 2017/10/19.
  */
-import React from 'react'
+import React, {PureComponent} from 'react'
 import {Link, withRouter} from 'react-router-dom'
 import {Menu, Icon} from 'antd';
 import {consoleRender} from 'localUtil/consoleLog'
-const AppMenu = (props) => {
-  consoleRender('AppMenu render');
-  let currentPathName = props.location.pathname;
-  let menus = props.menus;
-  let menusMap = props.menusMap;
-  // NavLink不优雅
-  // 不能用defaultSelectedKeys
-  return (
-    <Menu theme="dark" selectedKeys={[menusMap[currentPathName]]} mode="inline">
-      {menus.map((item) => {
-        return (
-          <Menu.Item key={item.key}>
-            <Link to={item.path}>
-              <Icon type={item.icon}/>
-              <span>{item.name}</span>
-            </Link>
-          </Menu.Item>
-        );
-      })}
-    </Menu>
-  );
-};
+
+const SubMenu = Menu.SubMenu;
+
+class AppMenu extends PureComponent {
+  render() {
+    const menusMap = {
+      '/': '1',
+      '/home': '1',
+      '/dashboard': '1',
+      '/broadcast': '2'
+    };
+    let currentPathName = this.props.location.pathname;
+    let openkeys = '';
+    if (['/broadcast'].indexOf(currentPathName) !== -1) {
+      openkeys = 'message';
+    }
+    return (
+      <Menu
+        theme="dark"
+        inlineCollapsed={this.props.collapsed}
+        openKeys={[openkeys]}
+        selectedKeys={[menusMap[currentPathName]]}
+        mode="inline"
+      >
+        <SubMenu key="message" title={<span><Icon type="mail"/><span>消息管理</span></span>}>
+          <Menu.Item key="1"><Link to='/broadcast'>broadcast</Link></Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+  }
+}
 
 export default withRouter(AppMenu);

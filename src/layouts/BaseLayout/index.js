@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import {bindActionCreators} from 'redux';
 import {Icon, Layout, notification} from 'antd';
-import {injectIntl} from 'react-intl';
 import AppMenu from './menu'
 import AppHeader from './header'
 import ModelLogin from './modelLogin'
@@ -18,41 +17,11 @@ class BaseLayout extends PureComponent {
     super();
   }
 
-  state = {
-    menuProps: {}
-  };
-
   toggleCollapsed = () => {
     this.props.appActions.appToggleCollapsed();
   };
 
   componentWillMount() {
-    let locale = this.props.intl.formatMessage;
-    const menuProps = {
-      menus: [
-        {
-          path: '/dashboard',
-          icon: 'desktop',
-          name: locale({id: 'App.menu.dashboard'}),
-          key: 1
-        },
-        {
-          path: '/test',
-          icon: 'pushpin',
-          name: locale({id: 'App.menu.test'}),
-          key: 2
-        }
-      ],
-      menusMap: {
-        '/': '1',
-        '/home': '1',
-        '/dashboard': '1',
-        '/test': '2'
-      }
-    };
-    this.setState({
-      menuProps
-    });
   }
 
   //生命周期mount
@@ -75,7 +44,6 @@ class BaseLayout extends PureComponent {
     let props = this.props;
     let store = this.props.app;
     console.log(store.loginUser);
-    let state = this.state;
     return (
       <div className="app-main">
         <Layout>
@@ -85,7 +53,7 @@ class BaseLayout extends PureComponent {
             className="app-sider"
             collapsed={store.collapsed}
           >
-            <AppMenu {...state.menuProps}/>
+            <AppMenu collapsed={store.collapsed}/>
             <div className="trigger-wrap">
               <Icon
                 className="trigger"
@@ -131,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
   appActions: bindActionCreators(appActions, dispatch)
 });
 
-export default injectIntl(withRouter(connect(mapStateToProps, mapDispatchToProps)(BaseLayout)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BaseLayout));

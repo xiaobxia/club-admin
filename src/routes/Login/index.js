@@ -43,10 +43,7 @@ class Login extends PureComponent {
         <div className="logo">登录</div>
         {this.state.showError && (<Alert message={this.state.errorMsg} type="error" closable onClose={this.onClose}/>)}
         <Card noHovering={true}>
-          <LoginForm onLoginHandler={this.loginHandler}>
-            <Link to="/user/forgot">忘记密码</Link>
-          </LoginForm>
-          <Link to="/user/register">去注册</Link>
+          <LoginForm onLoginHandler={this.loginHandler}/>
         </Card>
       </div>
     );
