@@ -10,17 +10,15 @@ const Option = Select.Option;
 //PureComponent浅比较
 class BroadcastHeader extends PureComponent {
 
-  handleSearch = () => {
-    this.props.onSearch();
+  handleSearch = (e) => {
+    //使用submit
+    e.preventDefault();
+    this.props.onSearch(this.props.form.getFieldsValue());
   };
 
   handleFormReset = () => {
     const {form} = this.props;
     form.resetFields();
-    // dispatch({
-    //   type: 'rule/fetch',
-    //   payload: {},
-    // });
   };
 
   handleAdd = () => {
@@ -37,6 +35,7 @@ class BroadcastHeader extends PureComponent {
               <FormItem label="状态">
                 {getFieldDecorator('state')(
                   <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="">全部</Option>
                     <Option value="U">未启用</Option>
                     <Option value="A">启用</Option>
                     <Option value="X">禁用</Option>
@@ -47,7 +46,7 @@ class BroadcastHeader extends PureComponent {
             <Col md={8} sm={24}>
             <span>
               <Button type="primary" htmlType="submit">查询</Button>
-              <Button style={{marginLeft: 8}} onClick={this.handleFormReset}>重置</Button>
+              <Button type="primary" style={{marginLeft: 8}} onClick={this.handleFormReset}>重置</Button>
               <Button type="primary" style={{marginLeft: 8}} onClick={this.handleAdd}>新建</Button>
             </span>
             </Col>

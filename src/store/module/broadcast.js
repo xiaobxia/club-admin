@@ -4,8 +4,6 @@
 import http from 'localUtil/httpUtil';
 const BROADCAST_QUERY_BROADCASTS_BEGIN = 'BROADCAST_QUERY_BROADCASTS_BEGIN';
 const BROADCAST_QUERY_BROADCASTS_SUC = 'BROADCAST_QUERY_BROADCASTS_SUC';
-const BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN = 'BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN';
-const BROADCAST_QUERY_BROADCASTS_COUNT_SUC = 'BROADCAST_QUERY_BROADCASTS_COUNT_SUC';
 const BROADCAST_QUERY_BROADCAST_BEGIN = 'BROADCAST_QUERY_BROADCAST_BEGIN';
 const BROADCAST_QUERY_BROADCAST_SUC = 'BROADCAST_QUERY_BROADCAST_SUC';
 
@@ -18,19 +16,23 @@ export const broadcastActions = {
       });
     };
   },
-  queryBroadcastsCount() {
+  queryBroadcast(queryString) {
     return (dispatch, getState) => {
-      dispatch({type: BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN});
-      return http.get('broadcasts/count').then((data) => {
-        dispatch({type: BROADCAST_QUERY_BROADCASTS_COUNT_SUC, data});
+      dispatch({type: BROADCAST_QUERY_BROADCAST_BEGIN});
+      return http.get('broadcasts/item?' + queryString).then((data) => {
+        dispatch({type: BROADCAST_QUERY_BROADCAST_SUC, data});
       });
     };
   },
-  queryBroadcast(uuid) {
+  clearCurrentBroadcast() {
     return (dispatch, getState) => {
       dispatch({type: BROADCAST_QUERY_BROADCAST_BEGIN});
-      return http.get('broadcasts/' + uuid).then((data) => {
-        dispatch({type: BROADCAST_QUERY_BROADCAST_SUC, data});
+    };
+  },
+  addBroadcast(data) {
+    return (dispatch, getState) => {
+      return http.post('broadcasts/add', data).then((data) => {
+        console.log(data)
       });
     };
   }
@@ -38,9 +40,7 @@ export const broadcastActions = {
 
 const broadcastStore = {
   broadcastList: [],
-  pageIndex: 1,
-  pageSize: 10,
-  total: 0,
+  pagination: {},
   currentBroadcast: {}
 };
 export const broadcastReducers = (state = broadcastStore, action) => {
@@ -48,24 +48,13 @@ export const broadcastReducers = (state = broadcastStore, action) => {
   switch (action.type) {
     case BROADCAST_QUERY_BROADCASTS_BEGIN: {
       store.broadcastList = [];
-      store.pageIndex = 1;
-      store.pageSize = 10;
+      store.pagination = {};
       return store;
     }
     case BROADCAST_QUERY_BROADCASTS_SUC: {
       const data = action.data;
       store.broadcastList = data.list;
-      store.pageIndex = data.page.pageIndex;
-      store.pageSize = data.page.pageSize;
-      return store;
-    }
-    case BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN: {
-      store.total = 0;
-      return store;
-    }
-    case BROADCAST_QUERY_BROADCASTS_COUNT_SUC: {
-      const data = action.data;
-      store.total = data.count;
+      store.pagination = data.page;
       return store;
     }
     case BROADCAST_QUERY_BROADCAST_BEGIN: {

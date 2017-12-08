@@ -20,7 +20,8 @@ class Broadcast extends PureComponent {
 
   componentWillMount() {
     const query = this.getSearch();
-    query.pageIndex = query.pageIndex || 1;
+    //初始化页面
+    query.current = query.current || 1;
     query.pageSize = query.pageSize || 10;
     this.queryBroadcasts(qs.stringify(query));
     console.log(query)
@@ -38,29 +39,43 @@ class Broadcast extends PureComponent {
   queryBroadcasts = (queryString) => {
     const {broadcastActions} = this.props;
     broadcastActions.queryBroadcasts(queryString);
-    broadcastActions.queryBroadcastsCount();
+  };
+
+  queryBroadcastsWithUpdateQuery = (queryString) => {
+    this.props.history.push('/broadcast?' + queryString);
+    this.queryBroadcasts(queryString);
+  };
+
+  searchHandler = (filter) => {
+    filter.current = 1;
+    filter.pageSize = 10;
+    console.log(filter);
+    this.queryBroadcastsWithUpdateQuery(qs.stringify(filter));
+  };
+
+  toAddHandler = () => {
+    this.props.history.push('/broadcast/edit');
   };
 
   tableChangeHandler = (pagination, filters, sorter) => {
     const query = this.getSearch();
-    query.pageIndex = pagination.current;
+    query.current = pagination.current;
     query.pageSize = pagination.pageSize;
-    this.props.history.push('/broadcast?' + qs.stringify(query));
-    this.queryBroadcasts(qs.stringify(query));
+    this.queryBroadcastsWithUpdateQuery(qs.stringify(query));
     console.log(pagination)
   };
 
   render() {
     const {broadcast} = this.props;
-    const {pageIndex, pageSize, total} = broadcast;
+    const {pagination} = broadcast;
     const listProps = {
-      pagination: {pageIndex, pageSize, total, showTotal: total => `共 ${total} 条记录`},
+      pagination: {...pagination, showTotal: total => `共 ${total} 条记录`},
       dataSource: broadcast.broadcastList,
       onChange: this.tableChangeHandler
     };
     return (
       <div className="broadcast-wrap">
-        <BroadcastHeader/>
+        <BroadcastHeader onSearch={this.searchHandler} onAdd={this.toAddHandler}/>
         <BroadcastList {...listProps}/>
       </div>
     );

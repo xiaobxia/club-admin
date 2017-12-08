@@ -2,7 +2,8 @@
  * Created by xiaobxia on 2017/12/7.
  */
 import React, {PureComponent} from 'react'
-import {Table, Button} from 'antd';
+import {Table, Button, Divider} from 'antd';
+import {Link} from 'react-router-dom'
 
 class BroadcastList extends PureComponent {
   render() {
@@ -68,16 +69,16 @@ class BroadcastList extends PureComponent {
       },
       {
         title: '操作',
-        width: 160,
+        width: 180,
         fixed: 'right',
         render: (record) => {
           return (
             <div>
-              <a href="" style={{margin: '0 .5em'}}>查看</a>
-              <span>|</span>
-              <a href="" style={{margin: '0 .5em'}}>编辑</a>
-              <span>|</span>
-              <a href="" style={{margin: '0 .5em'}}>删除</a>
+              <Link to={'/broadcast/view?id=' + record.id} style={{margin: '0 .5em'}}>查看</Link>
+              <Divider type="vertical" />
+              <Link to={'/broadcast/edit?id=' + record.id}>编辑</Link>
+              <Divider type="vertical" />
+              <a href="">删除</a>
             </div>
           );
         }
