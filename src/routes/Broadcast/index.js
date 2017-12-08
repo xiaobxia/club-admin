@@ -12,6 +12,9 @@ import BroadcastList from './list'
 import BroadcastHeader from './header'
 
 class Broadcast extends PureComponent {
+  state = {
+    redirectCount: 0
+  };
 
   //生命周期mount
   componentDidMount() {
@@ -19,13 +22,17 @@ class Broadcast extends PureComponent {
   }
 
   componentWillMount() {
+    this.initPage();
+  }
+
+  initPage = () => {
     const query = this.getSearch();
     //初始化页面
     query.current = query.current || 1;
     query.pageSize = query.pageSize || 10;
     this.queryBroadcasts(qs.stringify(query));
     console.log(query)
-  }
+  };
 
   getSearch = () => {
     const search = this.props.location.search;
@@ -38,7 +45,31 @@ class Broadcast extends PureComponent {
 
   queryBroadcasts = (queryString) => {
     const {broadcastActions} = this.props;
-    broadcastActions.queryBroadcasts(queryString);
+    broadcastActions.queryBroadcasts(queryString).then((data) => {
+      //无数据
+      if (data.list.length === 0) {
+        const query = this.getSearch();
+        const current = parseInt(query.current, 10);
+        if (current && current > 1) {
+          if (this.state.redirectCount > 1) {
+            this.props.history.push('/404');
+          }
+          this.setState((pre) => {
+            return {
+              redirectCount: pre.redirectCount + 1
+            }
+          });
+          query.current = current - 1;
+          this.queryBroadcastsWithUpdateQuery(qs.stringify(query));
+        }
+      } else {
+        this.setState((pre) => {
+          return {
+            redirectCount: 0
+          }
+        });
+      }
+    });
   };
 
   queryBroadcastsWithUpdateQuery = (queryString) => {
@@ -65,13 +96,21 @@ class Broadcast extends PureComponent {
     console.log(pagination)
   };
 
+  tableDeleteHandler = (id) => {
+    const {broadcastActions} = this.props;
+    broadcastActions.deleteBroadcast(id).then(() => {
+      this.initPage();
+    });
+  };
+
   render() {
     const {broadcast} = this.props;
     const {pagination} = broadcast;
     const listProps = {
       pagination: {...pagination, showTotal: total => `共 ${total} 条记录`},
       dataSource: broadcast.broadcastList,
-      onChange: this.tableChangeHandler
+      onChange: this.tableChangeHandler,
+      onDelete: this.tableDeleteHandler
     };
     return (
       <div className="broadcast-wrap">

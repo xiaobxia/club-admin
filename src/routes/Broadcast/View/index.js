@@ -23,12 +23,19 @@ const formItemLayout = {
 };
 
 class BroadcastView extends PureComponent {
+  state = {
+    id: ''
+  };
+
   componentWillMount() {
     const query = this.getSearch();
     //只要id
     this.queryBroadcast(qs.stringify({
       id: query.id
     }));
+    this.setState({
+      id: query.id
+    });
   }
 
   getSearch = () => {
@@ -62,13 +69,17 @@ class BroadcastView extends PureComponent {
     this.props.history.goBack();
   };
 
+  goEditHandler = () => {
+    this.props.history.push('/broadcast/edit?id=' + this.state.id);
+  };
+
   render() {
     const {broadcast} = this.props;
     const {currentBroadcast} = broadcast;
     return (
       <div className="broadcast-wrap">
         <Button onClick={this.goBackHandler}>返回</Button>
-        <Button type="primary">编辑</Button>
+        <Button type="primary" onClick={this.goEditHandler}>编辑</Button>
         <Divider type="horizontal"/>
         <Form>
           <FormItem {...formItemLayout} label="id">

@@ -13,6 +13,7 @@ export const broadcastActions = {
       dispatch({type: BROADCAST_QUERY_BROADCASTS_BEGIN});
       return http.get('broadcasts?' + queryString).then((data) => {
         dispatch({type: BROADCAST_QUERY_BROADCASTS_SUC, data});
+        return data;
       });
     };
   },
@@ -21,6 +22,7 @@ export const broadcastActions = {
       dispatch({type: BROADCAST_QUERY_BROADCAST_BEGIN});
       return http.get('broadcasts/item?' + queryString).then((data) => {
         dispatch({type: BROADCAST_QUERY_BROADCAST_SUC, data});
+        return data;
       });
     };
   },
@@ -33,6 +35,23 @@ export const broadcastActions = {
     return (dispatch, getState) => {
       return http.post('broadcasts/add', data).then((data) => {
         console.log(data)
+        return data;
+      });
+    };
+  },
+  saveBroadcast(data) {
+    return (dispatch, getState) => {
+      return http.post('broadcasts/save', data).then((data) => {
+        console.log(data)
+        return data;
+      });
+    };
+  },
+  deleteBroadcast(id) {
+    return (dispatch, getState) => {
+      return http.get('broadcasts/delete?id=' + id).then((data) => {
+        console.log(data)
+        return data;
       });
     };
   }

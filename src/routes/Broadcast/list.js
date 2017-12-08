@@ -2,10 +2,14 @@
  * Created by xiaobxia on 2017/12/7.
  */
 import React, {PureComponent} from 'react'
-import {Table, Button, Divider} from 'antd';
+import {Table, Button, Divider, Popconfirm} from 'antd';
 import {Link} from 'react-router-dom'
 
 class BroadcastList extends PureComponent {
+  deleteHandler = (id) => {
+    this.props.onDelete(id);
+  };
+
   render() {
     const columns = [
       {
@@ -75,10 +79,19 @@ class BroadcastList extends PureComponent {
           return (
             <div>
               <Link to={'/broadcast/view?id=' + record.id} style={{margin: '0 .5em'}}>查看</Link>
-              <Divider type="vertical" />
+              <Divider type="vertical"/>
               <Link to={'/broadcast/edit?id=' + record.id}>编辑</Link>
-              <Divider type="vertical" />
-              <a href="">删除</a>
+              <Divider type="vertical"/>
+              <Popconfirm
+                title="确认删除此记录?"
+                onConfirm={() => {
+                  this.deleteHandler(record.id)
+                }}
+                okText="确定"
+                cancelText="取消"
+              >
+                <a href="#">删除</a>
+              </Popconfirm>
             </div>
           );
         }

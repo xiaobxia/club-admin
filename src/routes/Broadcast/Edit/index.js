@@ -2,7 +2,7 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Button, Form, Input, Select, DatePicker, Divider} from 'antd';
+import {Button, Form, Input, Select, DatePicker, Divider, message} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import moment from 'moment'
@@ -75,9 +75,16 @@ class BroadcastEdit extends PureComponent {
     const {broadcastActions} = this.props;
     const data = this.getFormData();
     if (this.state.pageType === 'add') {
-      broadcastActions.addBroadcast(data);
+      broadcastActions.addBroadcast(data).then(() => {
+        message.success('添加成功');
+        this.props.history.push('/broadcast');
+      });
     } else {
-
+      data.id = this.state.id;
+      broadcastActions.saveBroadcast(data).then(() => {
+        message.success('修改成功');
+        this.props.history.push('/broadcast');
+      });
     }
   };
 
@@ -92,7 +99,6 @@ class BroadcastEdit extends PureComponent {
     return (
       <div className="broadcast-wrap">
         <Button onClick={this.goBackHandler}>返回</Button>
-        <Button type="primary">编辑</Button>
         <Divider type="horizontal"/>
         <Form>
           <FormItem {...formItemLayout} label="平台">
