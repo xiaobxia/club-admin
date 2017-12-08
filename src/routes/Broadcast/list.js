@@ -60,17 +60,15 @@ class BroadcastList extends PureComponent {
       },
       {
         title: '标题',
-        width: 200,
         dataIndex: 'title'
       },
       {
         title: 'url',
-        width: 200,
         dataIndex: 'url'
       },
       {
         title: '操作',
-        width: 200,
+        width: 160,
         fixed: 'right',
         render: (record) => {
           return (

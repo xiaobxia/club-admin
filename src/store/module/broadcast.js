@@ -6,6 +6,8 @@ const BROADCAST_QUERY_BROADCASTS_BEGIN = 'BROADCAST_QUERY_BROADCASTS_BEGIN';
 const BROADCAST_QUERY_BROADCASTS_SUC = 'BROADCAST_QUERY_BROADCASTS_SUC';
 const BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN = 'BROADCAST_QUERY_BROADCASTS_COUNT_BEGIN';
 const BROADCAST_QUERY_BROADCASTS_COUNT_SUC = 'BROADCAST_QUERY_BROADCASTS_COUNT_SUC';
+const BROADCAST_QUERY_BROADCAST_BEGIN = 'BROADCAST_QUERY_BROADCAST_BEGIN';
+const BROADCAST_QUERY_BROADCAST_SUC = 'BROADCAST_QUERY_BROADCAST_SUC';
 
 export const broadcastActions = {
   queryBroadcasts(queryString) {
@@ -23,6 +25,14 @@ export const broadcastActions = {
         dispatch({type: BROADCAST_QUERY_BROADCASTS_COUNT_SUC, data});
       });
     };
+  },
+  queryBroadcast(uuid) {
+    return (dispatch, getState) => {
+      dispatch({type: BROADCAST_QUERY_BROADCAST_BEGIN});
+      return http.get('broadcasts/' + uuid).then((data) => {
+        dispatch({type: BROADCAST_QUERY_BROADCAST_SUC, data});
+      });
+    };
   }
 };
 
@@ -30,7 +40,8 @@ const broadcastStore = {
   broadcastList: [],
   pageIndex: 1,
   pageSize: 10,
-  total: 0
+  total: 0,
+  currentBroadcast: {}
 };
 export const broadcastReducers = (state = broadcastStore, action) => {
   let store = Object.assign({}, state);
@@ -55,6 +66,15 @@ export const broadcastReducers = (state = broadcastStore, action) => {
     case BROADCAST_QUERY_BROADCASTS_COUNT_SUC: {
       const data = action.data;
       store.total = data.count;
+      return store;
+    }
+    case BROADCAST_QUERY_BROADCAST_BEGIN: {
+      store.currentBroadcast = {};
+      return store;
+    }
+    case BROADCAST_QUERY_BROADCAST_SUC: {
+      const data = action.data;
+      store.currentBroadcast = data.item;
       return store;
     }
     //TODO 需要有default返回返回旧的state

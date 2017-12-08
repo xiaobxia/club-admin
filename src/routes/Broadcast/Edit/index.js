@@ -1,5 +1,5 @@
 /**
- * Created by xiaobxia on 2017/12/7.
+ * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
 import {Breadcrumb} from 'antd';
@@ -8,14 +8,12 @@ import {withRouter} from 'react-router-dom'
 import {broadcastActions} from 'localStore/actions'
 import {bindActionCreators} from 'redux';
 import qs from 'qs'
-import BroadcastList from './list'
-import BroadcastHeader from './header'
 
-class Broadcast extends PureComponent {
+class BroadcastEdit extends PureComponent {
 
   //生命周期mount
   componentDidMount() {
-    console.log('Broadcast mount');
+    console.log('BroadcastEdit mount');
   }
 
   componentWillMount() {
@@ -41,27 +39,9 @@ class Broadcast extends PureComponent {
     broadcastActions.queryBroadcastsCount();
   };
 
-  tableChangeHandler = (pagination, filters, sorter) => {
-    const query = this.getSearch();
-    query.pageIndex = pagination.current;
-    query.pageSize = pagination.pageSize;
-    this.props.history.push('/broadcast?' + qs.stringify(query));
-    this.queryBroadcasts(qs.stringify(query));
-    console.log(pagination)
-  };
-
   render() {
-    const {broadcast} = this.props;
-    const {pageIndex, pageSize, total} = broadcast;
-    const listProps = {
-      pagination: {pageIndex, pageSize, total, showTotal: total => `共 ${total} 条记录`},
-      dataSource: broadcast.broadcastList,
-      onChange: this.tableChangeHandler
-    };
     return (
       <div className="broadcast-wrap">
-        <BroadcastHeader/>
-        <BroadcastList {...listProps}/>
       </div>
     );
   }
@@ -79,4 +59,4 @@ const mapDispatchToProps = dispatch => ({
   broadcastActions: bindActionCreators(broadcastActions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Broadcast));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BroadcastEdit));

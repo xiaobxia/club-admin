@@ -25,7 +25,7 @@ class AppMenu extends PureComponent {
       <Menu
         theme="dark"
         inlineCollapsed={this.props.collapsed}
-        openKeys={[openkeys]}
+        defaultOpenKeys={[openkeys]}
         selectedKeys={[menusMap[currentPathName]]}
         mode="inline"
       >

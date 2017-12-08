@@ -3,7 +3,7 @@
  */
 import React, {PureComponent} from 'react'
 import {Menu, Icon, Dropdown, Avatar} from 'antd';
-import {consoleRender} from 'localUtil/consoleLog'
+
 //PureComponent浅比较
 class AppHeader extends PureComponent {
   state = {
@@ -18,7 +18,6 @@ class AppHeader extends PureComponent {
   };
 
   render() {
-    consoleRender('Header render');
     const loginUserMenu = (
       <Menu style={{textAlign: 'center'}}>
         <Menu.Item>

@@ -42,7 +42,7 @@ class Login extends PureComponent {
       <div className="login-wrap">
         <div className="logo">登录</div>
         {this.state.showError && (<Alert message={this.state.errorMsg} type="error" closable onClose={this.onClose}/>)}
-        <Card noHovering={true}>
+        <Card hoverable={true}>
           <LoginForm onLoginHandler={this.loginHandler}/>
         </Card>
       </div>
