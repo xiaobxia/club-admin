@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 //PureComponent浅比较
-class BroadcastHeader extends PureComponent {
+class SystemMessageHeader extends PureComponent {
 
   handleSearch = (e) => {
     //使用submit
@@ -32,7 +32,7 @@ class BroadcastHeader extends PureComponent {
   render() {
     const {getFieldDecorator} = this.props.form;
     return (
-      <div className="broadcast-header">
+      <div className="systemMessage-header">
         <Form onSubmit={this.handleSearch} layout="inline">
           <Row gutter={{md: 8, lg: 24, xl: 48}}>
             <Col md={8} sm={24}>
@@ -62,4 +62,4 @@ class BroadcastHeader extends PureComponent {
   }
 }
 
-export default Form.create()(BroadcastHeader);
+export default Form.create()(SystemMessageHeader);

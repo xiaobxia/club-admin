@@ -5,7 +5,7 @@ import React, {PureComponent} from 'react'
 import {Form, Divider, Button} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {broadcastActions} from 'localStore/actions'
+import {systemMessageActions} from 'localStore/actions'
 import {bindActionCreators} from 'redux';
 import qs from 'qs'
 
@@ -22,7 +22,7 @@ const formItemLayout = {
   }
 };
 
-class BroadcastView extends PureComponent {
+class SystemMessageView extends PureComponent {
   state = {
     id: ''
   };
@@ -30,7 +30,7 @@ class BroadcastView extends PureComponent {
   componentWillMount() {
     const query = this.getSearch();
     //只要id
-    this.queryBroadcast(qs.stringify({
+    this.querySystemMessage(qs.stringify({
       id: query.id
     }));
     this.setState({
@@ -51,9 +51,9 @@ class BroadcastView extends PureComponent {
     return query;
   };
 
-  queryBroadcast = (queryString) => {
-    const {broadcastActions} = this.props;
-    broadcastActions.queryBroadcast(queryString);
+  querySystemMessage = (queryString) => {
+    const {systemMessageActions} = this.props;
+    systemMessageActions.querySystemMessage(queryString);
   };
 
   renderState = (state) => {
@@ -74,49 +74,43 @@ class BroadcastView extends PureComponent {
   };
 
   goEditHandler = () => {
-    this.props.history.push('/broadcast/edit?id=' + this.state.id);
+    this.props.history.push('/systemMessage/edit?id=' + this.state.id);
   };
 
   render() {
-    const {broadcast} = this.props;
-    const {currentBroadcast} = broadcast;
+    const {systemMessage} = this.props;
+    const {currentSystemMessage} = systemMessage;
     return (
-      <div className="broadcast-wrap">
+      <div className="systemMessage-wrap">
         <Button onClick={this.goBackHandler}>返回</Button>
         <Button type="primary" onClick={this.goEditHandler}>编辑</Button>
         <Divider type="horizontal"/>
         <Form>
           <FormItem {...formItemLayout} label="id">
-            <span>{currentBroadcast.id}</span>
+            <span>{currentSystemMessage.id}</span>
           </FormItem>
           <FormItem {...formItemLayout} label="uuid">
-            <span>{currentBroadcast.uuid}</span>
+            <span>{currentSystemMessage.uuid}</span>
           </FormItem>
           <FormItem {...formItemLayout} label="创建时间">
-            <span>{currentBroadcast.createDate}</span>
+            <span>{currentSystemMessage.createDate}</span>
           </FormItem>
           <FormItem {...formItemLayout} label="更新时间">
-            <span>{currentBroadcast.updateDate}</span>
+            <span>{currentSystemMessage.updateDate}</span>
           </FormItem>
-          <FormItem {...formItemLayout} label="上线时间">
-            <span>{currentBroadcast.startDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="下线时间">
-            <span>{currentBroadcast.endDate}</span>
+          <FormItem {...formItemLayout} label="发送时间">
+            <span>{currentSystemMessage.startDate}</span>
           </FormItem>
           <FormItem {...formItemLayout} label="状态">
             <span>
-              {this.renderState(currentBroadcast.state)}
+              {this.renderState(currentSystemMessage.state)}
             </span>
           </FormItem>
-          <FormItem {...formItemLayout} label="平台">
-            <span>{currentBroadcast.platform}</span>
-          </FormItem>
           <FormItem {...formItemLayout} label="标题">
-            <span>{currentBroadcast.title}</span>
+            <span>{currentSystemMessage.title}</span>
           </FormItem>
           <FormItem {...formItemLayout} label="url">
-            <span>{currentBroadcast.url}</span>
+            <span>{currentSystemMessage.url}</span>
           </FormItem>
         </Form>
       </div>
@@ -127,13 +121,13 @@ class BroadcastView extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    broadcast: state.broadcast
+    systemMessage: state.systemMessage
   }
 };
 
 const mapDispatchToProps = dispatch => ({
   //action在此为引入
-  broadcastActions: bindActionCreators(broadcastActions, dispatch)
+  systemMessageActions: bindActionCreators(systemMessageActions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BroadcastView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SystemMessageView));

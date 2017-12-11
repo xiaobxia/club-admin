@@ -5,7 +5,7 @@ import React, {PureComponent} from 'react'
 import {Table, Button, Divider, Popconfirm} from 'antd';
 import {Link} from 'react-router-dom'
 
-class BroadcastList extends PureComponent {
+class SystemMessageList extends PureComponent {
   deleteHandler = (id) => {
     this.props.onDelete(id);
   };
@@ -38,19 +38,9 @@ class BroadcastList extends PureComponent {
         dataIndex: 'title'
       },
       {
-        title: '平台',
-        width: 80,
-        dataIndex: 'platform'
-      },
-      {
-        title: '上线时间',
+        title: '发送时间',
         width: 160,
         dataIndex: 'startDate'
-      },
-      {
-        title: '下线时间',
-        width: 160,
-        dataIndex: 'endDate'
       },
       {
         title: 'uuid',
@@ -78,9 +68,9 @@ class BroadcastList extends PureComponent {
         render: (record) => {
           return (
             <div>
-              <Link to={'/broadcast/view?id=' + record.id} style={{margin: '0 .5em'}}>查看</Link>
+              <Link to={'/systemMessage/view?id=' + record.id} style={{margin: '0 .5em'}}>查看</Link>
               <Divider type="vertical"/>
-              <Link to={'/broadcast/edit?id=' + record.id}>编辑</Link>
+              <Link to={'/systemMessage/edit?id=' + record.id}>编辑</Link>
               <Divider type="vertical"/>
               <Popconfirm
                 title="确认删除此记录?"
@@ -113,4 +103,4 @@ class BroadcastList extends PureComponent {
   }
 }
 
-export default BroadcastList;
+export default SystemMessageList;

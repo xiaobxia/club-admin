@@ -29,14 +29,14 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 4000,
+    port: 3000,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       "/clubAdmin": {
         // "target": "http://39.108.114.91:8080/",
-        "target": "http://localhost:8080/"
+        "target": "http://localhost:5000/"
       }
     //your-business': {
     //  target: 'http://11.111.111.11/'

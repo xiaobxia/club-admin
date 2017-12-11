@@ -14,11 +14,12 @@ class AppMenu extends PureComponent {
       '/': '1',
       '/home': '1',
       '/dashboard': '1',
-      '/broadcast': '2'
+      '/broadcast': '2',
+      '/systemMessage': '3'
     };
     let currentPathName = this.props.location.pathname;
     let openkeys = '';
-    if (['/broadcast'].indexOf(currentPathName) !== -1) {
+    if (['/broadcast', '/systemMessage'].indexOf(currentPathName) !== -1) {
       openkeys = 'message';
     }
     return (
@@ -31,6 +32,7 @@ class AppMenu extends PureComponent {
       >
         <SubMenu key="message" title={<span><Icon type="mail"/><span>消息管理</span></span>}>
           <Menu.Item key="1"><Link to='/broadcast'>broadcast</Link></Menu.Item>
+          <Menu.Item key="3"><Link to='/systemMessage'>systemMessage</Link></Menu.Item>
         </SubMenu>
       </Menu>
     );

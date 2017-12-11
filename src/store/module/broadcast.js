@@ -54,6 +54,14 @@ export const broadcastActions = {
         return data;
       });
     };
+  },
+  updateBroadcasts() {
+    return (dispatch, getState) => {
+      return http.get('broadcasts/clearTable').then((data) => {
+        console.log(data)
+        return data;
+      });
+    };
   }
 };
 

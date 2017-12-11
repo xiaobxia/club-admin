@@ -5,20 +5,20 @@ import React, {PureComponent} from 'react'
 import {Breadcrumb, message} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {broadcastActions} from 'localStore/actions'
+import {systemMessageActions} from 'localStore/actions'
 import {bindActionCreators} from 'redux';
 import qs from 'qs'
-import BroadcastList from './list'
-import BroadcastHeader from './header'
+import SystemMessageList from './list'
+import SystemMessageHeader from './header'
 
-class Broadcast extends PureComponent {
+class SystemMessage extends PureComponent {
   state = {
     redirectCount: 0
   };
 
   //生命周期mount
   componentDidMount() {
-    console.log('Broadcast mount');
+    console.log('SystemMessage mount');
   }
 
   componentWillMount() {
@@ -30,7 +30,7 @@ class Broadcast extends PureComponent {
     //初始化页面
     query.current = query.current || 1;
     query.pageSize = query.pageSize || 10;
-    this.queryBroadcasts(qs.stringify(query));
+    this.querySystemMessages(qs.stringify(query));
     console.log(query)
   };
 
@@ -43,9 +43,9 @@ class Broadcast extends PureComponent {
     return query;
   };
 
-  queryBroadcasts = (queryString) => {
-    const {broadcastActions} = this.props;
-    broadcastActions.queryBroadcasts(queryString).then((data) => {
+  querySystemMessages = (queryString) => {
+    const {systemMessageActions} = this.props;
+    systemMessageActions.querySystemMessages(queryString).then((data) => {
       //无数据
       if (data.list.length === 0) {
         const query = this.getSearch();
@@ -60,7 +60,7 @@ class Broadcast extends PureComponent {
             }
           });
           query.current = current - 1;
-          this.queryBroadcastsWithUpdateQuery(qs.stringify(query));
+          this.querySystemMessagesWithUpdateQuery(qs.stringify(query));
         }
       } else {
         this.setState((pre) => {
@@ -72,51 +72,51 @@ class Broadcast extends PureComponent {
     });
   };
 
-  queryBroadcastsWithUpdateQuery = (queryString) => {
-    this.props.history.push('/broadcast?' + queryString);
-    this.queryBroadcasts(queryString);
+  querySystemMessagesWithUpdateQuery = (queryString) => {
+    this.props.history.push('/systemMessage?' + queryString);
+    this.querySystemMessages(queryString);
   };
 
   searchHandler = (filter) => {
     filter.current = 1;
     filter.pageSize = 10;
     console.log(filter);
-    this.queryBroadcastsWithUpdateQuery(qs.stringify(filter));
+    this.querySystemMessagesWithUpdateQuery(qs.stringify(filter));
   };
 
   toAddHandler = () => {
-    this.props.history.push('/broadcast/edit');
+    this.props.history.push('/systemMessage/edit');
   };
 
   tableChangeHandler = (pagination, filters, sorter) => {
     const query = this.getSearch();
     query.current = pagination.current;
     query.pageSize = pagination.pageSize;
-    this.queryBroadcastsWithUpdateQuery(qs.stringify(query));
+    this.querySystemMessagesWithUpdateQuery(qs.stringify(query));
     console.log(pagination)
   };
 
   tableDeleteHandler = (id) => {
-    const {broadcastActions} = this.props;
-    broadcastActions.deleteBroadcast(id).then(() => {
+    const {systemMessageActions} = this.props;
+    systemMessageActions.deleteSystemMessage(id).then(() => {
       this.initPage();
     });
   };
 
   tableUpdateHandler = () => {
-    const {broadcastActions} = this.props;
-    broadcastActions.updateBroadcasts().then(() => {
+    const {systemMessageActions} = this.props;
+    systemMessageActions.updateSystemMessages().then(() => {
       message.success('更新成功');
       this.initPage();
     });
   };
 
   render() {
-    const {broadcast} = this.props;
-    const {pagination} = broadcast;
+    const {systemMessage} = this.props;
+    const {pagination} = systemMessage;
     const listProps = {
       pagination: {...pagination, showTotal: total => `共 ${total} 条记录`},
-      dataSource: broadcast.broadcastList,
+      dataSource: systemMessage.systemMessageList,
       onChange: this.tableChangeHandler,
       onDelete: this.tableDeleteHandler
     };
@@ -126,9 +126,9 @@ class Broadcast extends PureComponent {
       onAdd: this.toAddHandler
     };
     return (
-      <div className="broadcast-wrap">
-        <BroadcastHeader {...headerProps}/>
-        <BroadcastList {...listProps}/>
+      <div className="systemMessage-wrap">
+        <SystemMessageHeader {...headerProps}/>
+        <SystemMessageList {...listProps}/>
       </div>
     );
   }
@@ -137,13 +137,13 @@ class Broadcast extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    broadcast: state.broadcast
+    systemMessage: state.systemMessage
   }
 };
 
 const mapDispatchToProps = dispatch => ({
   //action在此为引入
-  broadcastActions: bindActionCreators(broadcastActions, dispatch)
+  systemMessageActions: bindActionCreators(systemMessageActions, dispatch)
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Broadcast));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SystemMessage));
