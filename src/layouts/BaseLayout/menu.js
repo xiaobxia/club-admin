@@ -31,7 +31,7 @@ class AppMenu extends PureComponent {
         mode="inline"
       >
         <SubMenu key="message" title={<span><Icon type="mail"/><span>消息管理</span></span>}>
-          <Menu.Item key="1"><Link to='/broadcast'>broadcast</Link></Menu.Item>
+          <Menu.Item key="2"><Link to='/broadcast'>broadcast</Link></Menu.Item>
           <Menu.Item key="3"><Link to='/systemMessage'>systemMessage</Link></Menu.Item>
         </SubMenu>
       </Menu>
