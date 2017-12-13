@@ -11,6 +11,9 @@ import SystemMessageView from 'Bundle-loader?lazy!localRoutes/SystemMessage/View
 import Article from 'Bundle-loader?lazy!localRoutes/Article'
 import ArticleEdit from 'Bundle-loader?lazy!localRoutes/Article/Edit'
 import ArticleView from 'Bundle-loader?lazy!localRoutes/Article/View'
+import SysUser from 'Bundle-loader?lazy!localRoutes/SysUser'
+import SysUserEdit from 'Bundle-loader?lazy!localRoutes/SysUser/Edit'
+import SysUserView from 'Bundle-loader?lazy!localRoutes/SysUser/View'
 
 //router4就得以这种方式懒加载
 //其实model不需要按需加载，因为本来就不应该太大，应该由组件自己维护状态
@@ -88,5 +91,20 @@ export const baseRoutes = [
     name: 'ArticleView',
     path: '/article/view',
     component: getComponent(ArticleView)
+  },
+  {
+    name: 'SysUser',
+    path: '/sysUser',
+    component: getComponent(SysUser)
+  },
+  {
+    name: 'SysUserEdit',
+    path: '/sysUser/edit',
+    component: getComponent(SysUserEdit)
+  },
+  {
+    name: 'SysUserView',
+    path: '/sysUser/view',
+    component: getComponent(SysUserView)
   }
 ];

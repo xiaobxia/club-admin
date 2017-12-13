@@ -16,7 +16,9 @@ class AppMenu extends PureComponent {
       '/dashboard': '1',
       '/broadcast': '2',
       '/systemMessage': '3',
-      '/article': '4'
+      '/article': '4',
+      '/sysUser': '5',
+      '/userArchives': '6'
     };
     let currentPathName = this.props.location.pathname;
     currentPathName = '/' + currentPathName.split('/')[1];
@@ -25,6 +27,8 @@ class AppMenu extends PureComponent {
       openkeys = 'message';
     } else if (['/article'].indexOf(currentPathName) !== -1) {
       openkeys = 'article';
+    } else if (['/sysUser', '/userArchives'].indexOf(currentPathName) !== -1) {
+      openkeys = 'account';
     }
     return (
       <Menu
@@ -40,6 +44,10 @@ class AppMenu extends PureComponent {
         </SubMenu>
         <SubMenu key="article" title={<span><Icon type="file-text"/><span>文章管理</span></span>}>
           <Menu.Item key="4"><Link to='/article'>article</Link></Menu.Item>
+        </SubMenu>
+        <SubMenu key="account" title={<span><Icon type="user"/><span>用户管理</span></span>}>
+          <Menu.Item key="5"><Link to='/sysUser'>sysUser</Link></Menu.Item>
+          <Menu.Item key="6"><Link to='/userArchives'>userArchives</Link></Menu.Item>
         </SubMenu>
       </Menu>
     );

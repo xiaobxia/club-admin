@@ -5,3 +5,4 @@ export {appActions} from './module/app';
 export {broadcastActions} from './module/broadcast';
 export {systemMessageActions} from './module/systemMessage';
 export {articleActions} from './module/article';
+export {sysUserActions} from './module/sysUser';
