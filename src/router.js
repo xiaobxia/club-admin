@@ -8,6 +8,9 @@ import BroadcastView from 'Bundle-loader?lazy!localRoutes/Broadcast/View'
 import SystemMessage from 'Bundle-loader?lazy!localRoutes/SystemMessage'
 import SystemMessageEdit from 'Bundle-loader?lazy!localRoutes/SystemMessage/Edit'
 import SystemMessageView from 'Bundle-loader?lazy!localRoutes/SystemMessage/View'
+import Article from 'Bundle-loader?lazy!localRoutes/Article'
+import ArticleEdit from 'Bundle-loader?lazy!localRoutes/Article/Edit'
+import ArticleView from 'Bundle-loader?lazy!localRoutes/Article/View'
 
 //router4就得以这种方式懒加载
 //其实model不需要按需加载，因为本来就不应该太大，应该由组件自己维护状态
@@ -70,5 +73,20 @@ export const baseRoutes = [
     name: 'SystemMessageView',
     path: '/systemMessage/view',
     component: getComponent(SystemMessageView)
+  },
+  {
+    name: 'Article',
+    path: '/article',
+    component: getComponent(Article)
+  },
+  {
+    name: 'ArticleEdit',
+    path: '/article/edit',
+    component: getComponent(ArticleEdit)
+  },
+  {
+    name: 'ArticleView',
+    path: '/article/view',
+    component: getComponent(ArticleView)
   }
 ];

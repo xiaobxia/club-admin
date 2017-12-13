@@ -16,6 +16,7 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "intl": "^1.2.5",
+    "jquery": "^3.2.1",
     "md5": "^2.2.1",
     "moment": "^2.18.1",
     "nprogress": "^0.2.0",
@@ -30,7 +31,8 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "simditor": "^2.3.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

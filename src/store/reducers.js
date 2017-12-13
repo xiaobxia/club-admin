@@ -5,9 +5,11 @@ import { combineReducers } from 'redux'
 import {appReducers} from './module/app';
 import {broadcastReducers} from './module/broadcast';
 import {systemMessageReducers} from './module/systemMessage';
+import {articleReducers} from './module/article';
 
 export default combineReducers({
   app: appReducers,
   broadcast: broadcastReducers,
-  systemMessage: systemMessageReducers
+  systemMessage: systemMessageReducers,
+  article: articleReducers
 })
