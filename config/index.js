@@ -10,9 +10,9 @@ module.exports = {
     assetsSubDirectory: '',
     // 解决打包时font的问题
     assetsPathInCss: '../../',
-    // assetsPublicPath: './',
+    assetsPublicPath: './',
     //放七牛加速，减少带宽占用
-    assetsPublicPath: 'http://ozuuc00xw.bkt.clouddn.com/',
+    cdnPublicPath: 'http://ozuuc00xw.bkt.clouddn.com/',
     //打包就移除sourceMap
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
@@ -25,7 +25,8 @@ module.exports = {
     // View the Bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
+    ifCdn: false
   },
   dev: {
     env: require('./dev.env'),
