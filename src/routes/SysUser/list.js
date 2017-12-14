@@ -18,35 +18,55 @@ class SysUserList extends PureComponent {
         dataIndex: 'id'
       },
       {
-        title: '标题',
-        dataIndex: 'title'
+        title: '用户名',
+        dataIndex: 'userName'
       },
       {
-        title: '作者id',
-        dataIndex: 'userId'
+        title: '邮箱',
+        dataIndex: 'email'
       },
       {
-        title: '文章类型',
-        dataIndex: 'sysUserType'
+        title: '手机号',
+        dataIndex: 'mobile'
       },
       {
-        title: '文章标签',
-        dataIndex: 'sysUserTags'
+        title: '激活',
+        render: (record) => {
+          switch (record.active) {
+            case 'Y':
+              return <span style={{color: '#69d07a'}}>已激活</span>;
+            case 'N':
+              return <span style={{color: '#ff4444'}}>未激活</span>;
+            default:
+              return <span>未设置</span>;
+          }
+        }
       },
       {
-        title: '点赞数',
-        width: 80,
-        dataIndex: 'likeCount'
+        title: '状态',
+        render: (record) => {
+          switch (record.state) {
+            case 'A':
+              return <span style={{color: '#69d07a'}}>启用</span>;
+            case 'X':
+              return <span style={{color: '#ff4444'}}>禁用</span>;
+            default:
+              return <span>未设置</span>;
+          }
+        }
       },
       {
-        title: '评论数',
-        width: 160,
-        dataIndex: 'commentCount'
-      },
-      {
-        title: 'uuid',
-        width: 300,
-        dataIndex: 'uuid'
+        title: '锁定',
+        render: (record) => {
+          switch (record.isLocked) {
+            case 'Y':
+              return <span style={{color: '#ff4444'}}>已锁定</span>;
+            case 'N':
+              return <span style={{color: '#69d07a'}}>未锁定</span>;
+            default:
+              return <span>未设置</span>;
+          }
+        }
       },
       {
         title: '创建时间',
@@ -57,10 +77,6 @@ class SysUserList extends PureComponent {
         title: '更新时间',
         width: 160,
         dataIndex: 'updateDate'
-      },
-      {
-        title: 'url',
-        dataIndex: 'url'
       },
       {
         title: '操作',

@@ -83,7 +83,7 @@ class BroadcastView extends PureComponent {
     return (
       <div className="broadcast-wrap">
         <Button onClick={this.goBackHandler}>返回</Button>
-        <Button type="primary" onClick={this.goEditHandler}>编辑</Button>
+        <Button type="primary" style={{marginLeft: 8}} onClick={this.goEditHandler}>编辑</Button>
         <Divider type="horizontal"/>
         <Form>
           <FormItem {...formItemLayout} label="id">

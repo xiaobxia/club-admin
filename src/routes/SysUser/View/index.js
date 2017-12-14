@@ -2,7 +2,7 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Form, Divider, Button} from 'antd';
+import {Form, Divider, Button, Row, Col} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {sysUserActions} from 'localStore/actions'
@@ -12,14 +12,14 @@ import qs from 'qs'
 const FormItem = Form.Item;
 
 const formItemLayout = {
-  // labelCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 8}
-  // },
-  // wrapperCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 16}
-  // }
+  labelCol: {
+    xs: {span: 24},
+    sm: {span: 8}
+  },
+  wrapperCol: {
+    xs: {span: 24},
+    sm: {span: 16}
+  }
 };
 
 class SysUserView extends PureComponent {
@@ -64,54 +64,144 @@ class SysUserView extends PureComponent {
     this.props.history.push('/sysUser/edit?id=' + this.state.id);
   };
 
+  renderActive = (active) => {
+    switch (active) {
+      case 'Y':
+        return <span style={{color: '#69d07a'}}>已激活</span>;
+      case 'N':
+        return <span style={{color: '#ff4444'}}>未激活</span>;
+      default:
+        return <span>未设置</span>;
+    }
+  };
+
+  renderState = (state) => {
+    switch (state) {
+      case 'A':
+        return <span style={{color: '#69d07a'}}>启用</span>;
+      case 'X':
+        return <span style={{color: '#ff4444'}}>禁用</span>;
+      default:
+        return <span>未设置</span>;
+    }
+  };
+
+  renderIsLocked = (isLocked) => {
+    switch (isLocked) {
+      case 'Y':
+        return <span style={{color: '#ff4444'}}>已锁定</span>;
+      case 'N':
+        return <span style={{color: '#69d07a'}}>未锁定</span>;
+      default:
+        return <span>未设置</span>;
+    }
+  };
+
+  renderForceLogin = (forceLogin) => {
+    switch (forceLogin) {
+      case 'Y':
+        return <span style={{color: '#ff4444'}}>是</span>;
+      case 'N':
+        return <span style={{color: '#69d07a'}}>否</span>;
+      default:
+        return <span>未设置</span>;
+    }
+  };
+
   render() {
     const {sysUser} = this.props;
     const {currentSysUser} = sysUser;
     return (
       <div className="sysUser-wrap">
         <Button onClick={this.goBackHandler}>返回</Button>
-        <Button type="primary" onClick={this.goEditHandler}>编辑</Button>
+        <Button type="primary" style={{marginLeft: 8}} onClick={this.goEditHandler}>编辑</Button>
         <Divider type="horizontal"/>
         <Form>
-          <FormItem {...formItemLayout} label="id">
-            <span>{currentSysUser.id}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="uuid">
-            <span>{currentSysUser.uuid}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="创建时间">
-            <span>{currentSysUser.createDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="更新时间">
-            <span>{currentSysUser.updateDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="作者id">
-            <span>{currentSysUser.userId}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章类型">
-            <span>{currentSysUser.sysUserType}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章标签">
-            <span>{currentSysUser.sysUserTags}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章标题">
-            <span>{currentSysUser.title}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章点赞数">
-            <span>{currentSysUser.likeCount}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章评论数">
-            <span>{currentSysUser.commentCount}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章地址">
-            <span>{currentSysUser.url}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="文章内容">
-            <div
-              className="sysUser-content-wrap"
-              dangerouslySetInnerHTML={{__html: currentSysUser.content}}
-            />
-          </FormItem>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="id">
+                <span>{currentSysUser.id}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="uuid">
+                <span>{currentSysUser.uuid}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="用户名">
+                <span>{currentSysUser.userName}</span>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="密码">
+                <span>{currentSysUser.password}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="邮箱">
+                <span>{currentSysUser.email}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="激活">
+                <span>{this.renderActive(currentSysUser.active)}</span>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="激活日期">
+                <span>{currentSysUser.activeDate}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态">
+                <span>{this.renderState(currentSysUser.state)}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态修改日期">
+                <span>{currentSysUser.stateDate}</span>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="锁定">
+                <span>{this.renderIsLocked(currentSysUser.isLocked)}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="强制登录">
+                <span>{this.renderForceLogin(currentSysUser.forceLogin)}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="登录失败次数">
+                <span>{currentSysUser.loginFail}</span>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="解锁日期">
+                <span>{currentSysUser.unlockDate}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="创建日期">
+                <span>{currentSysUser.createDate}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="修改日期">
+                <span>{currentSysUser.updateDate}</span>
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
       </div>
     );

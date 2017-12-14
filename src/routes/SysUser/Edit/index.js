@@ -2,27 +2,25 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Button, Form, Input, Select, DatePicker, Divider, message} from 'antd';
+import {Button, Form, Input, Select, DatePicker, Divider, message, Row, Col} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import moment from 'moment'
 import {sysUserActions} from 'localStore/actions'
 import {bindActionCreators} from 'redux';
 import qs from 'qs'
-import AppEditor from 'localComponent/Editor'
 
 const {RangePicker} = DatePicker;
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
-  // labelCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 8}
-  // },
-  // wrapperCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 16}
-  // }
+  labelCol: {
+    xs: {span: 24},
+    sm: {span: 8}
+  },
+  wrapperCol: {
+    xs: {span: 24},
+    sm: {span: 16}
+  }
 };
 
 class SysUserEdit extends PureComponent {
@@ -117,32 +115,107 @@ class SysUserEdit extends PureComponent {
         <Button onClick={this.goBackHandler}>返回</Button>
         <Divider type="horizontal"/>
         <Form>
-          <FormItem label="文章类型">
-            {getFieldDecorator('sysUserType', {
-              initialValue: currentSysUser.sysUserType,
-              rules: [{required: true, message: '请选择文章类型'}]
-            })(
-              <Select placeholder="请选择" style={{width: 200}}>
-                <Option value="question">问答</Option>
-                <Option value="activity">活动</Option>
-                <Option value="friend">交友</Option>
-                <Option value="game">游戏</Option>
-                <Option value="partTime">兼职</Option>
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="标题">
-            {getFieldDecorator('title', {
-              initialValue: currentSysUser.title,
-              rules: [{required: true, message: '请输入标题'}]
-            })(
-              <Input/>
-            )}
-          </FormItem>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="用户名">
+                {getFieldDecorator('userName', {
+                  initialValue: currentSysUser.userName,
+                  rules: [{required: true, message: '请输入用户名'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="密码">
+                {getFieldDecorator('password', {
+                  initialValue: currentSysUser.password,
+                  rules: [{required: true, message: '请输入密码'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="邮箱">
+                {getFieldDecorator('email', {
+                  initialValue: currentSysUser.email,
+                  rules: [{required: true, message: '请输入邮箱'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="手机号">
+                {getFieldDecorator('mobile', {
+                  initialValue: currentSysUser.mobile,
+                  rules: [{required: true, message: '请输入手机号'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="激活">
+                {getFieldDecorator('active', {
+                  initialValue: currentSysUser.active || 'Y',
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Select style={{width: 200}}>
+                    <Option value="Y">激活</Option>
+                    <Option value="N">未激活</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态">
+                {getFieldDecorator('state', {
+                  initialValue: currentSysUser.state || 'Y',
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Select style={{width: 200}}>
+                    <Option value="Y">启用</Option>
+                    <Option value="N">禁用</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="强制登录">
+                {getFieldDecorator('forceLogin', {
+                  initialValue: currentSysUser.forceLogin || 'N',
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="Y">是</Option>
+                    <Option value="N">否</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="是否锁定">
+                {getFieldDecorator('isLocked', {
+                  initialValue: currentSysUser.isLocked || 'N',
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="Y">是</Option>
+                    <Option value="N">否</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+            </Col>
+          </Row>
         </Form>
-        <AppEditor ref={(div) => {
-          this.editor = div;
-        }} sourceData={currentSysUser.content}/>
         <Button type="primary" onClick={this.saveHandler}>保存</Button>
       </div>
     );

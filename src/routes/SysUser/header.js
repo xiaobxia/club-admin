@@ -70,8 +70,8 @@ class SysUserHeader extends PureComponent {
                 {getFieldDecorator('state')(
                   <Select placeholder="请选择" style={{width: 180}}>
                     <Option value="">全部</Option>
-                    <Option value="A">是</Option>
-                    <Option value="X">否</Option>
+                    <Option value="A">未禁用</Option>
+                    <Option value="X">已禁用</Option>
                   </Select>
                 )}
               </FormItem>
@@ -81,8 +81,8 @@ class SysUserHeader extends PureComponent {
                 {getFieldDecorator('isLocked')(
                   <Select placeholder="请选择" style={{width: 180}}>
                     <Option value="">全部</Option>
-                    <Option value="Y">是</Option>
-                    <Option value="N">否</Option>
+                    <Option value="Y">锁定</Option>
+                    <Option value="N">未锁定</Option>
                   </Select>
                 )}
               </FormItem>
@@ -92,8 +92,8 @@ class SysUserHeader extends PureComponent {
                 {getFieldDecorator('active')(
                   <Select placeholder="请选择" style={{width: 180}}>
                     <Option value="">全部</Option>
-                    <Option value="Y">是</Option>
-                    <Option value="N">否</Option>
+                    <Option value="Y">已激活</Option>
+                    <Option value="N">未激活</Option>
                   </Select>
                 )}
               </FormItem>
