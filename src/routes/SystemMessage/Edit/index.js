@@ -2,7 +2,7 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Button, Form, Input, Select, DatePicker, Divider, message} from 'antd';
+import {Button, Form, Input, Select, DatePicker, Divider, message, Row, Col} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import moment from 'moment'
@@ -13,14 +13,14 @@ import qs from 'qs'
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
-  // labelCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 8}
-  // },
-  // wrapperCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 16}
-  // }
+  labelCol: {
+    xs: {span: 24},
+    sm: {span: 8}
+  },
+  wrapperCol: {
+    xs: {span: 24},
+    sm: {span: 16}
+  }
 };
 
 class SystemMessageEdit extends PureComponent {
@@ -112,33 +112,41 @@ class SystemMessageEdit extends PureComponent {
         <Button onClick={this.goBackHandler}>返回</Button>
         <Divider type="horizontal"/>
         <Form>
-          <FormItem {...formItemLayout} label="发送时间">
-            {getFieldDecorator('startDate', {
-              initialValue: moment(currentSystemMessage.startDate),
-              rules: [{required: true, message: '请输入发送时间'}]
-            })(
-              <DatePicker format="YYYY-MM-DD"/>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="标题">
-            {getFieldDecorator('title', {
-              initialValue: currentSystemMessage.title,
-              rules: [{required: true, message: '请输入标题'}]
-            })(
-              <Input/>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="状态">
-            {getFieldDecorator('state', {
-              initialValue: currentSystemMessage.state
-            })(
-              <Select placeholder="请选择" style={{width: 200}}>
-                <Option value="U">未启用</Option>
-                <Option value="A">启用</Option>
-                <Option value="X">禁用</Option>
-              </Select>
-            )}
-          </FormItem>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="发送时间">
+                {getFieldDecorator('startDate', {
+                  initialValue: moment(currentSystemMessage.startDate),
+                  rules: [{required: true, message: '请输入发送时间'}]
+                })(
+                  <DatePicker format="YYYY-MM-DD"/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="标题">
+                {getFieldDecorator('title', {
+                  initialValue: currentSystemMessage.title,
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态">
+                {getFieldDecorator('state', {
+                  initialValue: currentSystemMessage.state
+                })(
+                  <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="U">未启用</Option>
+                    <Option value="A">启用</Option>
+                    <Option value="X">禁用</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
         <Button type="primary" onClick={this.saveHandler}>保存</Button>
       </div>

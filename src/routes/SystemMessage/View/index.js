@@ -2,7 +2,7 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Form, Divider, Button} from 'antd';
+import {Form, Divider, Button, Row, Col} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {systemMessageActions} from 'localStore/actions'
@@ -12,14 +12,14 @@ import qs from 'qs'
 const FormItem = Form.Item;
 
 const formItemLayout = {
-  // labelCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 8}
-  // },
-  // wrapperCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 16}
-  // }
+  labelCol: {
+    xs: {span: 24},
+    sm: {span: 8}
+  },
+  wrapperCol: {
+    xs: {span: 24},
+    sm: {span: 16}
+  }
 };
 
 class SystemMessageView extends PureComponent {
@@ -86,32 +86,54 @@ class SystemMessageView extends PureComponent {
         <Button type="primary" style={{marginLeft: 8}} onClick={this.goEditHandler}>编辑</Button>
         <Divider type="horizontal"/>
         <Form>
-          <FormItem {...formItemLayout} label="id">
-            <span>{currentSystemMessage.id}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="uuid">
-            <span>{currentSystemMessage.uuid}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="创建时间">
-            <span>{currentSystemMessage.createDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="更新时间">
-            <span>{currentSystemMessage.updateDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="发送时间">
-            <span>{currentSystemMessage.startDate}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="状态">
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="id">
+                <span>{currentSystemMessage.id}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="id">
+                <span>{currentSystemMessage.id}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="创建时间">
+                <span>{currentSystemMessage.createDate}</span>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="更新时间">
+                <span>{currentSystemMessage.updateDate}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="发送时间">
+                <span>{currentSystemMessage.startDate}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态">
             <span>
               {this.renderState(currentSystemMessage.state)}
             </span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="标题">
-            <span>{currentSystemMessage.title}</span>
-          </FormItem>
-          <FormItem {...formItemLayout} label="url">
-            <span>{currentSystemMessage.url}</span>
-          </FormItem>
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="标题">
+                <span>{currentSystemMessage.title}</span>
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="url">
+                <span>{currentSystemMessage.url}</span>
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
       </div>
     );

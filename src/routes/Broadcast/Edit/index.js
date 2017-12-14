@@ -2,7 +2,7 @@
  * Created by xiaobxia on 2017/12/8.
  */
 import React, {PureComponent} from 'react'
-import {Button, Form, Input, Select, DatePicker, Divider, message} from 'antd';
+import {Button, Form, Input, Select, DatePicker, Divider, message, Row, Col} from 'antd';
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import moment from 'moment'
@@ -14,14 +14,14 @@ const {RangePicker} = DatePicker;
 const Option = Select.Option;
 const FormItem = Form.Item;
 const formItemLayout = {
-  // labelCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 8}
-  // },
-  // wrapperCol: {
-  //   xs: {span: 24},
-  //   sm: {span: 16}
-  // }
+  labelCol: {
+    xs: {span: 24},
+    sm: {span: 8}
+  },
+  wrapperCol: {
+    xs: {span: 24},
+    sm: {span: 16}
+  }
 };
 
 class BroadcastEdit extends PureComponent {
@@ -115,43 +115,55 @@ class BroadcastEdit extends PureComponent {
         <Button onClick={this.goBackHandler}>返回</Button>
         <Divider type="horizontal"/>
         <Form>
-          <FormItem {...formItemLayout} label="平台">
-            {getFieldDecorator('platform', {
-              initialValue: currentBroadcast.platform,
-              rules: [{required: true, message: '请选择平台'}]
-            })(
-              <Select placeholder="请选择" style={{width: 200}}>
-                <Option value="web">web</Option>
-              </Select>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="上线与下线时间">
-            {getFieldDecorator('startAndEndDate', {
-              initialValue: [moment(currentBroadcast.startDate), moment(currentBroadcast.endDate)],
-              rules: [{required: true, message: '请输入上线与下线时间'}]
-            })(
-              <RangePicker format="YYYY-MM-DD"/>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="标题">
-            {getFieldDecorator('title', {
-              initialValue: currentBroadcast.title,
-              rules: [{required: true, message: '请输入标题'}]
-            })(
-              <Input/>
-            )}
-          </FormItem>
-          <FormItem {...formItemLayout} label="状态">
-            {getFieldDecorator('state', {
-              initialValue: currentBroadcast.state
-            })(
-              <Select placeholder="请选择" style={{width: 200}}>
-                <Option value="U">未启用</Option>
-                <Option value="A">启用</Option>
-                <Option value="X">禁用</Option>
-              </Select>
-            )}
-          </FormItem>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="平台">
+                {getFieldDecorator('platform', {
+                  initialValue: currentBroadcast.platform,
+                  rules: [{required: true, message: '请选择平台'}]
+                })(
+                  <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="web">web</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="上线与下线时间">
+                {getFieldDecorator('startAndEndDate', {
+                  initialValue: [moment(currentBroadcast.startDate), moment(currentBroadcast.endDate)],
+                  rules: [{required: true, message: '请输入上线与下线时间'}]
+                })(
+                  <RangePicker format="YYYY-MM-DD"/>
+                )}
+              </FormItem>
+            </Col>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="标题">
+                {getFieldDecorator('title', {
+                  initialValue: currentBroadcast.title,
+                  rules: [{required: true, message: '请输入标题'}]
+                })(
+                  <Input/>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row gutter={{md: 8, lg: 24, xl: 48}} style={{marginBottom: 20}}>
+            <Col md={8} sm={24}>
+              <FormItem {...formItemLayout} label="状态">
+                {getFieldDecorator('state', {
+                  initialValue: currentBroadcast.state
+                })(
+                  <Select placeholder="请选择" style={{width: 200}}>
+                    <Option value="U">未启用</Option>
+                    <Option value="A">启用</Option>
+                    <Option value="X">禁用</Option>
+                  </Select>
+                )}
+              </FormItem>
+            </Col>
+          </Row>
         </Form>
         <Button type="primary" onClick={this.saveHandler}>保存</Button>
       </div>

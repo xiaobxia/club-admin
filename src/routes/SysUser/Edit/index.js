@@ -212,8 +212,6 @@ class SysUserEdit extends PureComponent {
                 )}
               </FormItem>
             </Col>
-            <Col md={8} sm={24}>
-            </Col>
           </Row>
         </Form>
         <Button type="primary" onClick={this.saveHandler}>保存</Button>
