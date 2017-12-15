@@ -5,9 +5,13 @@ import './scss/index.scss';
 import AuthLayout from './layouts/AuthLayout'
 import BaseLayout from './layouts/BaseLayout'
 import PrivateRoute from 'localComponent/PrivateRoute'
+import http from 'localUtil/httpUtil';
 
 //无状态组件
 class App extends PureComponent {
+  componentDidMount() {
+    http.get('sys/auth/getDeviceId');
+  }
   render() {
     console.log('App render');
     return (
